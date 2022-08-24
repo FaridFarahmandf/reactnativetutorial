@@ -1,15 +1,22 @@
-import { StyleSheet, Text, View } from 'react-native';
+import React, {useState} from 'react';
+import { StyleSheet, Text, View, Button } from 'react-native';
 
 export default function App() {
+  const [name, setName] = useState("Farid");
+  const [person, setPerson] = useState({name: "Farnoush" , age:30});
+
+  const clickHandler = () => {
+    setName("Ops it's again King Farid");
+    setPerson({name: "Elahe", age:31 });
+  }
   return (
     <View style={styles.container}>
-      <View style={styles.firstView}>
-        <Text style={styles.boldText}> HELLO, WORLD</Text>
+      <View>
+        <Text>Ooops guess who wants to be a react native developer? correct the rocket: {name}</Text>
+        <Text>her name is {person.name} and she is {person.age} years old</Text>
       </View>
-      <View style={styles.secondView}>
-        <Text> Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, ab.</Text>
-        <Text style={styles.boldText}> Lorem ipsum <Text>dolor sit amet consectetur</Text> adipisicing elit. Nobis, ab.</Text>
-        <Text> Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, ab.</Text>
+      <View style={styles.buttonContainer}>
+        <Button title="Update the developer's name" onPress={clickHandler}/>
       </View>
     </View>
   );
@@ -21,17 +28,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    textAlign:"center",
   },
-  firstView: {
-    backgroundColor: "pink",
-    padding:20,
-  },
-  secondView: {
-    backgroundColor: "yellow",
-    padding: 20,
-    // fontWeight:"bold",
-  },
-  boldText:{
-    fontWeight:"bold",
-  },
+  buttonContainer: {
+    marginTop:20,
+  }
+
 });
