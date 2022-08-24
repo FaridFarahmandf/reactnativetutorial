@@ -1,11 +1,16 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <View style={styles.firstView}>
+        <Text style={styles.boldText}> HELLO, WORLD</Text>
+      </View>
+      <View style={styles.secondView}>
+        <Text> Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, ab.</Text>
+        <Text style={styles.boldText}> Lorem ipsum <Text>dolor sit amet consectetur</Text> adipisicing elit. Nobis, ab.</Text>
+        <Text> Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, ab.</Text>
+      </View>
     </View>
   );
 }
@@ -16,5 +21,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  firstView: {
+    backgroundColor: "pink",
+    padding:20,
+  },
+  secondView: {
+    backgroundColor: "yellow",
+    padding: 20,
+    // fontWeight:"bold",
+  },
+  boldText:{
+    fontWeight:"bold",
   },
 });
