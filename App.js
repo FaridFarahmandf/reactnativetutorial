@@ -1,74 +1,42 @@
-import React, {useState} from 'react';
-import { StyleSheet, Text, View, FlatList, Alert, TouchableWithoutFeedback, Keyboard} from 'react-native';
-import Form from './components/Form';
-import Header from './components/Header';
-import Sandbox from './components/Sandbox';
-import Todo from './components/Todo';
-import { AntDesign } from '@expo/vector-icons';
+import React, { useCallback, useEffect, useState } from 'react';
+import Home from './screen/Home';
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
+import { Text, View } from 'react-native';
 
+// const getFonts = () => {
+//   return Font.loadAsync({
+//     "nunito-regular": require('./assets/fonts/Nunito-Regular.ttf'),
+//     "nunito-bold": require('./assets/fonts/Nunito-Bold.ttf'),
+//   })
+// }
 export default function App() {
-  const [todo, setTodo] = useState([
-    {name: "ordering coffee", key:1},
-    {name: "playing tennis", key:2},
-    {name: "eating pizza", key:3},
-    {name: "going to the gym", key:4},
-  ])
-
-  const deleteHandler = (id) => {
-    console.log(id);
-    setTodo((prevTodo) => {
-      return prevTodo.filter((t) => t.key != id);
-    })
-  }
-
-  const addTodoList = (str) => {
-
-    if(str.length > 3){
-      const newTodos = [{name:str, key:Math.random()*1000}, ...todo];
-      setTodo(newTodos);
-    }else{
-      Alert.alert(
-        "Oops!!!", 
-        "Your todos must be more than 3 characters", 
-        [{text:"OK",onPress:() => console.log("understood that")}]
-      );
+    // const [isLoaded, setIsLoaded] = useState(false);
+    const [fontsLoaded] = useFonts({
+        "nunito-regular": require('./assets/fonts/Nunito-Regular.ttf'),
+        "nunito-bold": require('./assets/fonts/Nunito-Bold.ttf'),
+        "aboreto":require('./assets/fonts/Aboreto-Regular.ttf'), 
+    });
+  
+    useEffect(() => {
+      async function prepare() {
+        await SplashScreen.preventAutoHideAsync();
+      }
+      
+      prepare();
+    }, []);
+  
+    const onLayoutRootView = useCallback(async () => {
+      if (fontsLoaded) {
+        await SplashScreen.hideAsync();
+      }
+    }, [fontsLoaded]);
+    
+    if (!fontsLoaded) {
+      return null;
     }
-  }
-  return (
-    // <Sandbox />
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-
-      <View style={styles.container}>
-        <Header />
-        <View style={styles.content}>
-          <Form addTodoList={addTodoList}/>
-          <View style={styles.list}>
-            <FlatList 
-              data={todo}
-              renderItem={ ( { item } ) => (
-                <Todo item={item} deleteHandler={deleteHandler} />
-              )}
-            />
-          </View>
-        </View>
-      </View>
-    </TouchableWithoutFeedback>
-  );
+  
+      return (
+          <Home onLayout={onLayoutRootView}/>
+      )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  content: {
-    flex:1,
-    // backgroundColor:"skyblue",
-  },
-  list: {
-    flex:1, 
-    // backgroundColor:"green", 
-    paddingHorizontal:20,
-    paddingVertical:10,
-  },
-});
