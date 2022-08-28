@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Home from './screen/Home';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import Navigator from "./routes/homeStack";
 import { Text, View } from 'react-native';
 
 // const getFonts = () => {
@@ -37,6 +38,6 @@ export default function App() {
     }
   
       return (
-          <Home onLayout={onLayoutRootView}/>
+          <Navigator />
       )
 }
